@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Floating Logo Animation</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: white;
+        }
+        canvas {
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    <script>
+        const canvas = document.getElementById("canvas");
+        const ctx = canvas.getContext("2d");
+        canvas.width = 450;
+        canvas.height = 450;
+
+        const targetPositions = [
+            { x: 225, y: 100, color: "#2C7E3D" },
+            { x: 180, y: 145, color: "#3D9248" },
+            { x: 270, y: 145, color: "#70A770" },
+            { x: 135, y: 190, color: "#2C7E3D" },
+            { x: 225, y: 190, color: "#145A20" },
+            { x: 315, y: 190, color: "#70A770" },
+            { x: 180, y: 235, color: "#3D9248" },
+            { x: 270, y: 235, color: "#70A770" },
+            { x: 225, y: 280, color: "#A8D0A8" }
+        ];
+
+        let circles;
+
+        function resetCircles() {
+            circles = targetPositions.map(pos => ({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                targetX: pos.x,
+                targetY: pos.y,
+                color: pos.color
+            }));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            let allArrived = true;
+
+            circles.forEach(circle => {
+                if (Math.abs(circle.x - circle.targetX) > 1 || Math.abs(circle.y - circle.targetY) > 1) {
+                    allArrived = false;
+                    circle.x += (circle.targetX - circle.x) * 0.05;
+                    circle.y += (circle.targetY - circle.y) * 0.05;
+                }
+                ctx.beginPath();
+                ctx.arc(circle.x, circle.y, 20, 0, Math.PI * 2);
+                ctx.fillStyle = circle.color;
+                ctx.fill();
+                ctx.closePath();
+            });
+
+            if (!allArrived) {
+                requestAnimationFrame(animate);
+            } else {
+                setTimeout(() => {
+                    resetCircles();
+                    animate();
+                }, 2000); // 2秒後重啟動畫
+            }
+        }
+
+        resetCircles();
+        animate();
+    </script>
+</body>
+</html>
