@@ -42,6 +42,7 @@
         ];
 
         let circles;
+        let textOpacity = 0;
 
         function resetCircles() {
             circles = targetPositions.map(pos => ({
@@ -51,6 +52,7 @@
                 targetY: pos.y,
                 color: pos.color
             }));
+            textOpacity = 0;
         }
 
         function animate() {
@@ -69,6 +71,18 @@
                 ctx.fill();
                 ctx.closePath();
             });
+
+            if (!allArrived) {
+                textOpacity += 0.015;
+                if (textOpacity > 1) textOpacity = 1;
+            } else {
+                textOpacity = 1;
+            }
+
+            ctx.font = "bold 44px 'BiauKai', 'DFKai-SB', serif";
+            ctx.fillStyle = `rgba(0, 0, 0, ${textOpacity})`;
+            ctx.textAlign = "center";
+            ctx.fillText("九合", 225, 360);
 
             if (!allArrived) {
                 requestAnimationFrame(animate);
