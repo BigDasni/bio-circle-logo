@@ -91,10 +91,17 @@
                 textOpacity = 1;
             }
 
-            ctx.font = "bold 44px 'BiauKai', 'DFKai-SB', serif";
+            const logoFontStack = [
+                "'Noto Serif TC'",
+                "'Songti TC'",
+                "'PMingLiU'",
+                "'Times New Roman'",
+                "serif"
+            ].join(", ");
+            ctx.font = `600 42px ${logoFontStack}`;
             ctx.fillStyle = `rgba(0, 0, 0, ${textOpacity})`;
             ctx.textAlign = "left";
-            drawSpacedText("九合", 225, 360, 6);
+            drawSpacedText("九合", 225, 360, 4);
 
             if (!allArrived) {
                 requestAnimationFrame(animate);
