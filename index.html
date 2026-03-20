@@ -98,10 +98,10 @@
                 "'Times New Roman'",
                 "serif"
             ].join(", ");
-            ctx.font = `600 42px ${logoFontStack}`;
+            ctx.font = `600 48px ${logoFontStack}`;
             ctx.fillStyle = `rgba(0, 0, 0, ${textOpacity})`;
             ctx.textAlign = "left";
-            drawSpacedText("九合", 225, 360, 4);
+            drawSpacedText("九合", 225, 360, 10);
 
             if (!allArrived) {
                 requestAnimationFrame(animate);
