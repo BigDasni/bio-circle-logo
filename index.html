@@ -26,8 +26,18 @@
     <script>
         const canvas = document.getElementById("canvas");
         const ctx = canvas.getContext("2d");
-        canvas.width = 450;
-        canvas.height = 450;
+        const logicalSize = 450;
+
+        function setupCanvas() {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = logicalSize * dpr;
+            canvas.height = logicalSize * dpr;
+            canvas.style.width = `${logicalSize}px`;
+            canvas.style.height = `${logicalSize}px`;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        setupCanvas();
 
         const targetPositions = [
             { x: 225, y: 100, color: "#2C7E3D" },
@@ -46,8 +56,8 @@
 
         function resetCircles() {
             circles = targetPositions.map(pos => ({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
+                x: Math.random() * logicalSize,
+                y: Math.random() * logicalSize,
                 targetX: pos.x,
                 targetY: pos.y,
                 color: pos.color
@@ -68,7 +78,7 @@
         }
 
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0, 0, logicalSize, logicalSize);
             let allArrived = true;
 
             circles.forEach(circle => {
